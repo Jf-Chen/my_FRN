@@ -99,8 +99,17 @@ class FRN(nn.Module):
 
         Q_bar = query.matmul(hat).mul(rho) # way, way*query_shot*resolution, d
 
-        dist = (Q_bar-query.unsqueeze(0)).pow(2).sum(2).permute(1,0) # way*query_shot*resolution, way
+        #----------去掉了unsqueeze(),--------------------
+        #----原因，原本query输入是[way*query_shot*resolution, d]
+        #----------而现在query输入是[way,way*query_shot*resolution, d]
+        #----------代表使用了不同mask的query
+        #----------不过这样计算出来的dist是正确的吗？-----------------
         
+        
+        # dist = (Q_bar-query.unsqueeze(0)).pow(2).sum(2).permute(1,0) # way*query_shot*resolution, way # 这是原本的写法
+        
+        dist = (Q_bar-query).pow(2).sum(2).permute(1,0)
+        #---------------end-----------------------------#
         return dist
 
 
