@@ -52,6 +52,12 @@ class SetFunction(nn.Module):
             rho_input = rho_input.view(self.train_way, self.train_shot,self.resolution, -1)
             rho_input = torch.sum(rho_input, dim=1)
             
+            import pdb
+            pdb.set_trace()
+            
             rho_output = torch.nn.functional.relu6(self.rho(rho_input)) / 6 
+            
+            pdb.set_trace()
+            
             return rho_output
         # level = balance 不要了

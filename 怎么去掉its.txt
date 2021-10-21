@@ -1,0 +1,16 @@
+似乎打印的一长串是在eval.py中
+
+in dataloader.py meta_test_dataloader: query_shot= 15
+in sampler.py query_shot== 15
+
+0it [00:00, ?it/s]inp:  torch.Size([175, 3, 84, 84])
+way  5 shot  20 query_shot  15
+
+1it [00:00,  2.07it/s]inp:  torch.Size([175, 3, 84, 84])
+way  5 shot  20 query_shot  15
+
+2it [00:00,  2.99it/s]inp:  torch.Size([175, 3, 84, 84])
+way  5 shot  20 query_shot  15
+
+3it [00:00,  3.39it/s]inp:  torch.Size([175, 3, 84, 84])
+way  5 shot  20 query_shot  15

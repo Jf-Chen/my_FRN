@@ -180,6 +180,7 @@ class FRN(nn.Module):
 
 
     def meta_test(self,inp,way,shot,query_shot):
+        
 
         neg_l2_dist = self.get_neg_l2_dist(inp=inp,
                                         way=way,
