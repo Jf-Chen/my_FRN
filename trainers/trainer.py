@@ -62,6 +62,7 @@ def train_parser():
     parser.add_argument("--test_transform_type",help="size transformation type during inference",type=int)
     parser.add_argument("--val_trial",help="number of meta-testing episodes during validation",type=int,default=1000)
     parser.add_argument("--detailed_name", help="whether include training details in the name",action="store_true")
+    
 
     args = parser.parse_args()
 
@@ -189,6 +190,12 @@ class Train_Manager:
                 logger.info("train_acc: %.3f" % (train_acc))
 
                 model.eval()
+                #------------------要在这里插入一次模型的保存、缓存清除、加载模型------------#
+                #tempPath="temp"+save_path
+                #torch.save(model.state_dict(),tempPath)
+                #torch.cuda.empty_cache()
+                #model.load_state_dict(torch.load(tempPath))
+                #-------------------------end----------------------------------#
                 with torch.no_grad():
                     val_acc,val_interval = meta_test(data_path=self.pm.val,
                                                     model=model,

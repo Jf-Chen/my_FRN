@@ -4,7 +4,7 @@ import torch.nn.functional as F
 import numpy as np
 from .backbones import Conv_4,ResNet
 from models.set_function import SetFunction
-
+import pdb
 
 
 class FRN(nn.Module):
@@ -146,7 +146,7 @@ class FRN(nn.Module):
         # mask_class: torch.Size([5, 25, 640])
         
         masked_support_embeddings = support_embeddings.view(train_way,train_shot, resolution,-1) * \
-            (1 + mask_task ) * (1 + mask_class )# [5, 5, 25, 640]
+            (1 + mask_task ) * (1 + mask_class.unsqueeze(0).transpose(0, 1) )# [5, 5, 25, 640]
         masked_query_embeddings =query_embeddings.unsqueeze(0).expand(train_way, -1, -1,-1) * \
             (1 + mask_task) * (1 + mask_class.unsqueeze(0).transpose(0, 1) ) # [5, 75, 25, 640]
         

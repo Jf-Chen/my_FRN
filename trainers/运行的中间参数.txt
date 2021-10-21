@@ -1,0 +1,25 @@
+print((support_embeddings.view(train_way,train_shot, resolution,-1) *(1 + mask_task ) * (1 + mask_class )).size())
+
+
+ train_way:  5  
+ train_shot:  20  
+ query_shot: 15
+ support_embeddings:  torch.Size([100, 25, 640])  
+ query_embeddings: torch.Size([75, 25, 640])
+ mask_task: torch.Size([1, 25, 640])  
+ mask_class: torch.Size([5, 25, 640])
+ 
+train_way:  5  train_shot:  20  query_shot: 15
+support_embeddings:  torch.Size([100, 25, 640])  
+query_embeddings: torch.Size([75, 25, 640])
+mask_task: torch.Size([1, 25, 640])  
+mask_class: torch.Size([5, 25, 640])
+masked_support_embeddings: torch.Size([5, 20, 25, 640])  
+masked_query_embeddings: torch.Size([5, 75, 25, 640])
+support:  torch.Size([5, 500, 640])  
+query: torch.Size([5, 1875, 640])
+
+Q_bar torch.Size([5, 1875, 640])
+(Q_bar-query.unsqueeze(0)).size() [1, 5, 1875, 640]
+
+watch -n 5 nvidia-smi
