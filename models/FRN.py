@@ -114,7 +114,7 @@ class FRN(nn.Module):
 
 
     
-    def get_neg_l2_dist(self,inp,way,shot,query_shot,return_support=False):
+    def get_neg_l2_dist(self,inp,train_way,train_shot,query_shot,return_support=False):
         
         resolution = self.resolution
         d = self.d
@@ -129,12 +129,11 @@ class FRN(nn.Module):
         # query = feature_map[way*shot:].view(way*query_shot*resolution, d) #[1875, 640]
         
         #-------在这里插入glofa-------------
-        train_way=way
-        train_shot=shot
+
         support_embeddings = feature_map[:train_way*train_shot] # [25,25,640]
         query_embeddings = feature_map[train_way*train_shot:] # [75,25,640]
-        mask_task=self.f_task(support_embeddings,level='task')
-        mask_class=self.f_class(support_embeddings, level='class')
+        mask_task=self.f_task(support_embeddings,level='task',train_way,train_shot, resolution)
+        mask_class=self.f_class(support_embeddings, level='class',train_way,train_shot, resolution)
         
         
         # print("train_way: ",train_way,"train_shot",train_shot,"support_embeddings: ",support_embeddings.size(),"query_embeddings:",query_embeddings.size(),"mask_task:",mask_task.size(),"mask_class:",mask_class.size())
@@ -164,7 +163,7 @@ class FRN(nn.Module):
         
         #----------end-----------------------------#
         recon_dist = self.get_recon_dist(query=query,support=support,alpha=alpha,beta=beta) # [3750, 10]
-        neg_l2_dist = recon_dist.neg().view(way*query_shot,resolution,way).mean(1) # [150, 10]
+        neg_l2_dist = recon_dist.neg().view(train_way*query_shot,resolution,train_way).mean(1) # [150, 10]
         """
         recon_dist = self.get_recon_dist_glofa(query=query,support=support,alpha=alpha,beta=beta) # way*query_shot*resolution, way # [3750, 10]
         neg_l2_dist = recon_dist.neg().view(way*query_shot,resolution,way).mean(1) # way*query_shot, way # [150, 10]
@@ -183,8 +182,8 @@ class FRN(nn.Module):
         
 
         neg_l2_dist = self.get_neg_l2_dist(inp=inp,
-                                        way=way,
-                                        shot=shot,
+                                        train_way=way,
+                                        train_shot=shot,
                                         query_shot=query_shot)
 
         _,max_index = torch.max(neg_l2_dist,1)
@@ -219,8 +218,8 @@ class FRN(nn.Module):
         
         
         neg_l2_dist, support = self.get_neg_l2_dist(inp=inp,
-                                                    way=self.way,
-                                                    shot=self.shots[0],
+                                                    train_way=self.way,
+                                                    train_shot=self.shots[0],
                                                     query_shot=self.shots[1],
                                                     return_support=True)
         
