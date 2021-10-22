@@ -14,3 +14,14 @@ way  5 shot  20 query_shot  15
 
 3it [00:00,  3.39it/s]inp:  torch.Size([175, 3, 84, 84])
 way  5 shot  20 query_shot  15
+
+从
+[10/21 07:13:52] detailed_name: False
+[10/21 07:13:52] ------------------------
+[10/21 07:13:52] start training!
+到
+[10/21 07:16:22] val_5-way-20-shot_acc: 49.812	1.319
+[10/21 07:16:22] BEST!
+100%|██████████| 1/1 [02:30<00:00, 150.47s/it]
+中间发生了什么
+应该和data_loader有关

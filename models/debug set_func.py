@@ -32,5 +32,5 @@ inp: torch.Size([105, 3, 84, 84]) way: 5 shot 5 query_shot 16
         
         
 具体的原因是glofa的MLP在train阶段就固定形状了，比如train_shot=20,
-而当tm.evaluate(model)时，query shot=16,但实际上FRN的seff.f_class仍然是按照20构建的，因此在后面不匹配
+而当tm.evaluate(model)时，query shot=16,但实际上FRN的seff.f_class仍然是按照20构建的，因此在后面产生维度不匹配
         

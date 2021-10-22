@@ -132,8 +132,8 @@ class FRN(nn.Module):
 
         support_embeddings = feature_map[:train_way*train_shot] # [25,25,640]
         query_embeddings = feature_map[train_way*train_shot:] # [75,25,640]
-        mask_task=self.f_task(support_embeddings,level='task',train_way,train_shot, resolution)
-        mask_class=self.f_class(support_embeddings, level='class',train_way,train_shot, resolution)
+        mask_task=self.f_task(support_embeddings,level='task',train_way=train_way,train_shot=train_shot, resolution=resolution)
+        mask_class=self.f_class(support_embeddings, level='class',train_way=train_way,train_shot=train_shot, resolution=resolution)
         
         
         # print("train_way: ",train_way,"train_shot",train_shot,"support_embeddings: ",support_embeddings.size(),"query_embeddings:",query_embeddings.size(),"mask_task:",mask_task.size(),"mask_class:",mask_class.size())
